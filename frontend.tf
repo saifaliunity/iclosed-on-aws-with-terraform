@@ -1,3 +1,9 @@
+provider "aws" {
+  alias   = "virginia"
+  region  = "us-east-1"
+  profile = "iclosed-tf-prod"
+}
+
 data "aws_cloudfront_origin_request_policy" "origin_request_policy" {
   name = var.origin_request_policy_name
 }
