@@ -68,9 +68,9 @@ resource "aws_lb_listener" "secure-listener" {
 }
 
 resource "aws_acm_certificate" "iclosed-ssl-cert" {
-  domain_name       = var.bk_domain_name
+  domain_name               = var.bk_domain_name
   subject_alternative_names = [var.fe_domain_name]
-  validation_method = "DNS"
+  validation_method         = "DNS"
 
   tags = {
     Environment = var.env
