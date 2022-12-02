@@ -8,6 +8,9 @@ data "aws_cloudfront_cache_policy" "cache_policy" {
 
 data "aws_s3_bucket" "selected" {
   bucket = var.fe_domain_name
+depends_on = [
+  aws_s3_bucket.fe-s3
+]
 }
 
 module "cdn" {
