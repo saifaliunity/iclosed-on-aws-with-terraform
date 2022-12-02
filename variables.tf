@@ -13,63 +13,6 @@ variable "region" {
   default     = "us-east-1"
 }
 
-variable "wp_admin_email" {
-  type        = string
-  description = "iclosed Admin email address"
-}
-######################
-## EC2 Variables #######
-#####################
-variable "ec2_instance_type" {
-  type    = string
-  default = "t2.micro"
-}
-
-variable "ec2_public_key_name" {
-  type        = string
-  description = "SSH public key name for the AWS key pair"
-}
-
-variable "ec2_public_key_path" {
-  type        = string
-  description = "The path on the local machine for the SSH public key"
-}
-
-variable "ec2_sg_ingress_ports" {
-  type        = list(number)
-  description = "inbound Security group ports to be opened"
-}
-
-variable "ec2_bastion_asg_desired_capacity" {
-  type        = number
-  description = "the desired capacity for the bastion instacnes in the auto scaling group"
-}
-
-variable "ec2_bastion_asg_min_capacity" {
-  type        = number
-  description = "the minimum capacity for the bastion instacnes in the auto scaling group"
-}
-
-variable "ec2_bastion_asg_max_capacity" {
-  type        = number
-  description = "the maximum capacity to scale out to, for the bastion instacnes in the auto scaling group"
-}
-
-variable "ec2_iclosed_asg_desired_capacity" {
-  type        = number
-  description = "the desired capacity for the iclosed instacnes in the auto scaling group"
-}
-
-variable "ec2_iclosed_asg_min_capacity" {
-  type        = number
-  description = "the minimum capacity for the iclosed instacnes in the auto scaling group"
-}
-
-variable "ec2_iclosed_asg_max_capacity" {
-  type        = number
-  description = "the maximum capacity to scale out to, for the iclosed instacnes in the auto scaling group"
-}
-
 #####################
 ## RDS Variables #######
 #####################
@@ -110,6 +53,18 @@ variable "db_max_capacity" {
   description = "The max capacity of the  DB instance"
 }
 
+variable "db_name" {
+  type = string
+}
+
+variable "db_username" {
+  type = string
+}
+
+variable "db_password" {
+  type = string
+}
+
 ############################
 ## Elastic Cache Variables #######
 ############################
@@ -134,10 +89,13 @@ variable "ec_az_mode" {
 }
 
 variable "ec_redis_port" {
-  default     = 11211
   type        = number
   description = "The Memcache port that the nodes will be listing on"
 }
+
+############################
+## Elastic Container Service Variables #######
+############################
 
 variable "task_cpu" {
   description = "(Required) Task CPU to the iclosed task"
@@ -155,31 +113,25 @@ variable "application_tag" {
   description = "(Required) tag to application"
 }
 
-variable "bk_domain_name" {
-  description = "(Required) Domain name to use in load balancer configuration for listener rule."
-}
-
 variable "healthcheck_path" {
   description = "(Required) Healthcheck path for iclosed."
 }
 
-variable "efs_mount_dir_in_container" {
-  description = "(Required) efs mount point directory inside the container."
-}
-variable "db_name" {
-  type = string
-}
+############################
+## Route53 Variables #######
+############################
 
-variable "db_username" {
-  type = string
-}
-
-variable "db_password" {
-  type = string
+variable "bk_domain_name" {
+  description = "(Required) Domain name to use in load balancer configuration for listener rule."
 }
 
 variable "fe_domain_name" {
 }
+
+############################
+## Cloudfront Variables #######
+############################
+
 variable "cache_policy_name" {
   default = "Managed-CachingOptimized"
 }
