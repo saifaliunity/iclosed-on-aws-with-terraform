@@ -7,7 +7,7 @@ data "aws_cloudfront_cache_policy" "cache_policy" {
 }
 
 resource "aws_acm_certificate" "iclosed-fe-ssl-cert" {
-  provider          = var.virginia
+  provider          = "${var.virginia}"
   domain_name       = var.fe_domain_name
   validation_method = "DNS"
 
