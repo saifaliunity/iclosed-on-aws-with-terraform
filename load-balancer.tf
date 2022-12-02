@@ -81,7 +81,7 @@ resource "aws_acm_certificate" "iclosed-ssl-cert" {
 }
 
 data "aws_route53_zone" "iclosed" {
-  name         = var.bk_domain_name
+  name         = var.hosted_zone_domain
   private_zone = false
 }
 

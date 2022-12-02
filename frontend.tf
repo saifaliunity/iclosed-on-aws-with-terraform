@@ -66,6 +66,7 @@ module "cdn" {
     ssl_support_method  = "sni-only"
   }
   depends_on = [
+    aws_s3_bucket.fe-s3,
     aws_acm_certificate_validation.iclosed-ssl-validator
   ]
 }

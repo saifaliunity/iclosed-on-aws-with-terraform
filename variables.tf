@@ -124,6 +124,10 @@ variable "bk_domain_name" {
 variable "fe_domain_name" {
 }
 
+variable "hosted_zone_domain" {
+  
+}
+
 ############################
 ## Cloudfront Variables #######
 ############################
