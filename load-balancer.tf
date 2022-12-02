@@ -111,7 +111,7 @@ resource "aws_route53_record" "iclosed-ecs-record" {
 
   allow_overwrite = true
   name            = var.bk_domain_name
-  records         = [aws_alb.application_load_balancer.dns_name]
+  records         = [aws_lb.iclosed_lb.dns_name]
   ttl             = 60
   type            = "CNAME"
   zone_id         = data.aws_route53_zone.iclosed.zone_id
