@@ -114,7 +114,7 @@ resource "aws_vpc_endpoint" "rds" {
   security_group_ids = [
     aws_security_group.vpc_endpoint_security_group.id
   ]
-  subnet_ids = [aws_subnet.private_subnets.*.id]
+  subnet_ids = aws_subnet.private_subnets.*.id
 
   tags = {
     Name        = "rds-endpoint"
