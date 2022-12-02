@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "env-s3" {
   }
 }
 
-resource "aws_s3_bucket" "f3-s3" {
+resource "aws_s3_bucket" "fe-s3" {
   bucket = var.fe_domain_name
 
   tags = {

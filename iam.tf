@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "s3_data_bucket_policy" {
       "s3:GetBucketLocation"
     ]
     resources = [
-      "${aws_s3_bucket.f3-s3.arn}"
+      "${aws_s3_bucket.fe-s3.arn}"
     ]
   }
   statement {
