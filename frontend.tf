@@ -35,7 +35,7 @@ module "cdn" {
 
   origin = {
     s3_one = {
-      domain_name = data.aws_s3_bucket.selected.domain_name
+      domain_name = "${var.fe_domain_name}"
       s3_origin_config = {
         origin_access_identity = "s3_bucket_one"
       }
