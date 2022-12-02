@@ -33,7 +33,6 @@ resource "aws_cloudwatch_log_group" "iclosed-backend-redis_cw_log_group" {
 
 resource "aws_elasticache_cluster" "redis_cluster" {
   cluster_id           = "iclosed-cluster"
-  apply_immediately    = true
   replication_group_id = aws_elasticache_replication_group.redis_cluster_rg.id
   log_delivery_configuration {
     destination      = aws_cloudwatch_log_group.iclosed-backend-redis_cw_log_group.name
