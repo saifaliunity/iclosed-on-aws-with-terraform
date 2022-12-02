@@ -97,3 +97,16 @@ resource "aws_s3_bucket_policy" "s3_policy_cf_only" {
     data.aws_s3_bucket.selected
   ]
 }
+
+resource "aws_route53_record" "cf-record" {
+
+  allow_overwrite = true
+  name            = var.fe_domain_name
+  type            = "A"
+  zone_id         = data.aws_route53_zone.iclosed.zone_id
+  alias {
+    evaluate_target_health = false
+    name                   = module.cdn.cloudfront_distribution_domain_name
+    zone_id                = module.cdn.cloudfront_distribution_hosted_zone_id
+  }
+}
