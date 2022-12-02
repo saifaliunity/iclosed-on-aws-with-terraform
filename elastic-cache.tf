@@ -55,7 +55,7 @@ resource "aws_elasticache_replication_group" "redis_cluster_rg" {
   description                = "iclosed-redis-cluster"
   node_type                  = var.ec_node_type
   port                       = var.ec_redis_port
-  parameter_group_name       = "default.redis6.x.cluster.on"
+  # parameter_group_name       = "default.redis6.x.cluster.on"
   automatic_failover_enabled = true
 
   num_node_groups         = var.ec_nodes_count
