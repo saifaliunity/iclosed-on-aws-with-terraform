@@ -30,18 +30,6 @@ resource "aws_cloudwatch_log_group" "iclosed-backend-redis_cw_log_group" {
   }
 }
 
-
-# resource "aws_elasticache_cluster" "redis_cluster" {
-#   cluster_id           = "iclosed-cluster"
-#   replication_group_id = aws_elasticache_replication_group.redis_cluster_rg.id
-
-#   depends_on = [
-#     aws_elasticache_subnet_group.redis-sng,
-#     aws_security_group.iclosed-backend-redis_security_group
-#   ]
-
-#}
-
 resource "aws_elasticache_replication_group" "redis_cluster_rg" {
   replication_group_id       = "iclosed-cluster-rg"
   description                = "iclosed-redis-cluster"
