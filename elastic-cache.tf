@@ -14,3 +14,7 @@ resource "aws_elasticache_replication_group" "redis_cluster_rg" {
   num_node_groups         = var.ec_nodes_count
   replicas_per_node_group = 1
 }
+
+output "redis_endpoint" {
+  value = "${aws_elasticache_replication_group.redis_cluster_rg.*.primary_endpoint_address}"
+}
