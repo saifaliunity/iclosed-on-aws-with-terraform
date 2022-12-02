@@ -6,7 +6,7 @@ data "aws_route_table" "private" {
   subnet_id = aws_subnet.private_subnets[0].id
   depends_on = [
     aws_vpc.iclosed_vpc,
-    aws_route.private_rt
+    aws_route_table_association.private-rt-as
   ]
 }
 
