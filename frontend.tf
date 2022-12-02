@@ -6,13 +6,6 @@ data "aws_cloudfront_cache_policy" "cache_policy" {
   name = var.cache_policy_name
 }
 
-data "aws_s3_bucket" "selected" {
-  bucket = var.fe_domain_name
-  depends_on = [
-    aws_s3_bucket.fe-s3
-  ]
-}
-
 module "cdn" {
   source  = "terraform-aws-modules/cloudfront/aws"
   version = "2.9.3"
@@ -77,7 +70,7 @@ module "cdn" {
 data "aws_iam_policy_document" "s3_cf_iam_doc" {
   statement {
     actions   = ["s3:GetObject"]
-    resources = ["${data.aws_s3_bucket.selected.arn}/*"]
+    resources = ["${aws_s3_bucket.fe-s3.arn}/*"]
 
     principals {
       type        = "AWS"
@@ -91,10 +84,10 @@ data "aws_iam_policy_document" "s3_cf_iam_doc" {
 
 
 resource "aws_s3_bucket_policy" "s3_policy_cf_only" {
-  bucket = data.aws_s3_bucket.selected.id
+  bucket = aws_s3_bucket.fe-s3.id
   policy = data.aws_iam_policy_document.s3_cf_iam_doc.json
   depends_on = [
-    data.aws_s3_bucket.selected
+    aws_s3_bucket.fe-s3
   ]
 }
 
