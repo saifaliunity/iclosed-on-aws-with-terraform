@@ -103,9 +103,9 @@ resource "aws_route53_record" "iclosed-ssl-records" {
   ttl             = 60
   type            = each.value.type
   zone_id         = data.aws_route53_zone.iclosed.zone_id
-depends_on = [
-  aws_acm_certificate.iclosed-ssl-cert
-]
+  depends_on = [
+    aws_acm_certificate.iclosed-ssl-cert
+  ]
 }
 
 # Load balancer CNAME record to iclosed.io
