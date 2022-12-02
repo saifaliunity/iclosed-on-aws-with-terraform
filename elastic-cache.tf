@@ -49,16 +49,16 @@ resource "aws_elasticache_cluster" "redis_cluster" {
 }
 
 resource "aws_elasticache_replication_group" "redis_cluster_rg" {
-  replication_group_id       = "iclosed-cluster-rg"
-  description                = "iclosed-redis-cluster"
-  node_type                  = var.ec_node_type
-  port                       = var.ec_redis_port
+  replication_group_id = "iclosed-cluster-rg"
+  description          = "iclosed-redis-cluster"
+  node_type            = var.ec_node_type
+  port                 = var.ec_redis_port
   # parameter_group_name       = "default.redis6.x.cluster.on"
   automatic_failover_enabled = true
-  security_group_ids = [aws_security_group.iclosed-backend-redis_security_group.id]
-  subnet_group_name  = aws_elasticache_subnet_group.redis-sng.name
-  num_node_groups         = var.ec_nodes_count
-  replicas_per_node_group = 1
+  security_group_ids         = [aws_security_group.iclosed-backend-redis_security_group.id]
+  subnet_group_name          = aws_elasticache_subnet_group.redis-sng.name
+  num_node_groups            = var.ec_nodes_count
+  replicas_per_node_group    = 1
 }
 
 output "redis_endpoint" {

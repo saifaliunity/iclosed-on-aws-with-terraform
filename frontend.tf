@@ -68,6 +68,9 @@ module "cdn" {
   retain_on_delete    = false
   wait_for_deployment = false
   default_root_object = "index.html"
+  http_version        = "http2and3"
+
+
   custom_error_response = [{
     error_caching_min_ttl = 0
     error_code            = 403
@@ -106,10 +109,11 @@ module "cdn" {
     use_forwarded_values       = false
 
   }
-
   viewer_certificate = {
-    acm_certificate_arn = "${aws_acm_certificate_validation.iclosed-fe-ssl-validator.certificate_arn}"
-    ssl_support_method  = "sni-only"
+    acm_certificate_arn      = "${aws_acm_certificate_validation.iclosed-fe-ssl-validator.certificate_arn}"
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
+
   }
   depends_on = [
     aws_s3_bucket.fe-s3,
