@@ -50,9 +50,8 @@ resource "aws_acm_certificate_validation" "iclosed-fe-ssl-validator" {
 }
 
 module "cdn" {
-  provider = aws.virginia
-  source   = "terraform-aws-modules/cloudfront/aws"
-  version  = "2.9.3"
+  source  = "terraform-aws-modules/cloudfront/aws"
+  version = "2.9.3"
 
   aliases             = [var.fe_domain_name]
   comment             = var.fe_domain_name
