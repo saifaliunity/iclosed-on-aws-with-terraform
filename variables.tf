@@ -105,10 +105,6 @@ variable "task_memory" {
   description = "(Required) Task Memory to the iclosed task"
 }
 
-variable "container_image" {
-  description = "(Required) Container image to use in iclosed task"
-}
-
 variable "application_tag" {
   description = "(Required) tag to application"
 }
