@@ -34,12 +34,7 @@ resource "aws_cloudwatch_log_group" "iclosed-backend-redis_cw_log_group" {
 resource "aws_elasticache_cluster" "redis_cluster" {
   cluster_id           = "iclosed-cluster"
   replication_group_id = aws_elasticache_replication_group.redis_cluster_rg.id
-  log_delivery_configuration {
-    destination      = aws_cloudwatch_log_group.iclosed-backend-redis_cw_log_group.name
-    destination_type = "cloudwatch-logs"
-    log_format       = "text"
-    log_type         = "engine-log"
-  }
+
   depends_on = [
     aws_elasticache_subnet_group.redis-sng,
     aws_security_group.iclosed-backend-redis_security_group
@@ -48,16 +43,22 @@ resource "aws_elasticache_cluster" "redis_cluster" {
 }
 
 resource "aws_elasticache_replication_group" "redis_cluster_rg" {
-  replication_group_id = "iclosed-cluster-rg"
-  description          = "iclosed-redis-cluster"
-  node_type            = var.ec_node_type
-  port                 = var.ec_redis_port
-  # parameter_group_name       = "default.redis6.x.cluster.on"
+  replication_group_id       = "iclosed-cluster-rg"
+  description                = "iclosed-redis-cluster"
+  node_type                  = var.ec_node_type
+  port                       = var.ec_redis_port
+  apply_immediately          = true
   automatic_failover_enabled = true
   security_group_ids         = [aws_security_group.iclosed-backend-redis_security_group.id]
   subnet_group_name          = aws_elasticache_subnet_group.redis-sng.name
   num_node_groups            = var.ec_nodes_count
   replicas_per_node_group    = 1
+  log_delivery_configuration {
+    destination      = aws_cloudwatch_log_group.iclosed-backend-redis_cw_log_group.name
+    destination_type = "cloudwatch-logs"
+    log_format       = "text"
+    log_type         = "engine-log"
+  }
 }
 
 output "redis_endpoint" {
