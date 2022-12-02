@@ -3,11 +3,11 @@ variable "iclosed_service_container_port" {
 }
 
 variable "iclosed_service_container_name" {
-  default = "iclosed-backend-service-ecr"
+  default = "iclosed-backend-service"
 }
 
 resource "aws_ecr_repository" "iclosed_service_ecr_repo" {
-  name = ""
+  name = "iclosed-backend-service"
 }
 
 resource "aws_ecs_task_definition" "iclosed-backend-service-task-defintion" {
