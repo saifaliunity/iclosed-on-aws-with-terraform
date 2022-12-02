@@ -63,5 +63,5 @@ resource "aws_elasticache_replication_group" "redis_cluster_rg" {
 }
 
 output "redis_endpoint" {
-  value = aws_elasticache_replication_group.redis_cluster_rg.*.primary_endpoint_address
+  value = aws_elasticache_replication_group.redis_cluster_rg.primary_endpoint_address
 }
