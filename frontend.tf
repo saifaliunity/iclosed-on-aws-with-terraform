@@ -37,7 +37,7 @@ module "cdn" {
       }
       origin_shield = {
         enabled              = true
-        origin_shield_region = "${var.region}"
+        origin_shield_region = "eu-west-2"
       }
     }
   }
