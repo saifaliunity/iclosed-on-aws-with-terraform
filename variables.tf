@@ -132,6 +132,10 @@ variable "hosted_zone_domain" {
 ## Cloudfront Variables #######
 ############################
 
+variable "virginia" {
+
+}
+
 variable "cache_policy_name" {
   default = "Managed-CachingOptimized"
 }
