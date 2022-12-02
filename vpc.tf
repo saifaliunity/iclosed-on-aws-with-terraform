@@ -1,0 +1,35 @@
+resource "aws_vpc" "iclosed_vpc" {
+  cidr_block           = "10.0.0.0/24"
+  instance_tenancy     = "default"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  tags = {
+    Name = "iclosed-vpc"
+    env  = var.env
+  }
+}
+
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.iclosed_vpc.id
+
+  tags = {
+    Name = "iclosed-i-gw"
+    env  = var.env
+  }
+}
+
+resource "aws_eip" "eip" {
+  vpc        = true
+  count      = 2
+  depends_on = [aws_internet_gateway.gw]
+}
+
+resource "aws_nat_gateway" "nat" {
+  count         = 2
+  allocation_id = aws_eip.eip[count.index].id
+  subnet_id     = aws_subnet.public_subnets[count.index].id
+  tags = {
+    Name = format("%s-nat-gw", local.azs[count.index])
+    Env  = var.env
+  }
+}
