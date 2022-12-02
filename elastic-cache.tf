@@ -31,22 +31,23 @@ resource "aws_cloudwatch_log_group" "iclosed-backend-redis_cw_log_group" {
 }
 
 
-resource "aws_elasticache_cluster" "redis_cluster" {
-  cluster_id           = "iclosed-cluster"
-  replication_group_id = aws_elasticache_replication_group.redis_cluster_rg.id
+# resource "aws_elasticache_cluster" "redis_cluster" {
+#   cluster_id           = "iclosed-cluster"
+#   replication_group_id = aws_elasticache_replication_group.redis_cluster_rg.id
 
-  depends_on = [
-    aws_elasticache_subnet_group.redis-sng,
-    aws_security_group.iclosed-backend-redis_security_group
-  ]
+#   depends_on = [
+#     aws_elasticache_subnet_group.redis-sng,
+#     aws_security_group.iclosed-backend-redis_security_group
+#   ]
 
-}
+#}
 
 resource "aws_elasticache_replication_group" "redis_cluster_rg" {
   replication_group_id       = "iclosed-cluster-rg"
   description                = "iclosed-redis-cluster"
   node_type                  = var.ec_node_type
   port                       = var.ec_redis_port
+  multi_az_enabled           = true
   apply_immediately          = true
   automatic_failover_enabled = true
   security_group_ids         = [aws_security_group.iclosed-backend-redis_security_group.id]
