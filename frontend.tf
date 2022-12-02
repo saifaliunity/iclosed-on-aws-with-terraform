@@ -7,6 +7,7 @@ data "aws_cloudfront_cache_policy" "cache_policy" {
 }
 
 resource "aws_acm_certificate" "iclosed-fe-ssl-cert" {
+  provider          = aws.virginia
   domain_name       = var.fe_domain_name
   validation_method = "DNS"
 
@@ -43,11 +44,13 @@ resource "aws_route53_record" "iclosed-fe-ssl-records" {
 }
 
 resource "aws_acm_certificate_validation" "iclosed-fe-ssl-validator" {
+  provider                = aws.virginia
   certificate_arn         = aws_acm_certificate.iclosed-fe-ssl-cert.arn
   validation_record_fqdns = [for record in aws_route53_record.iclosed-fe-ssl-records : record.fqdn]
 }
 
 module "cdn" {
+
   source  = "terraform-aws-modules/cloudfront/aws"
   version = "2.9.3"
 
