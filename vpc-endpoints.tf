@@ -36,7 +36,7 @@ resource "aws_vpc_endpoint" "logs" {
   service_name      = "com.amazonaws.${data.aws_region.current.name}.logs"
   vpc_endpoint_type = "Interface"
   auto_accept       = true
-  subnet_ids        = [aws_subnet.private_subnets.*.id]
+  subnet_ids        = aws_subnet.private_subnets.*.id
   security_group_ids = [
     aws_security_group.vpc_endpoint_security_group.id
   ]
@@ -73,7 +73,7 @@ resource "aws_vpc_endpoint" "dkr" {
   security_group_ids = [
     aws_security_group.vpc_endpoint_security_group.id
   ]
-  subnet_ids = [aws_subnet.private_subnets.*.id]
+  subnet_ids = aws_subnet.private_subnets.*.id
 
 
   tags = {
@@ -94,7 +94,7 @@ resource "aws_vpc_endpoint" "ecr-api" {
   security_group_ids = [
     aws_security_group.vpc_endpoint_security_group.id
   ]
-  subnet_ids = [aws_subnet.private_subnets.*.id]
+  subnet_ids = aws_subnet.private_subnets.*.id
 
   tags = {
     Name        = "ecr-api-endpoint"
