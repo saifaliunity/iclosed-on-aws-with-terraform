@@ -6,6 +6,47 @@ data "aws_cloudfront_cache_policy" "cache_policy" {
   name = var.cache_policy_name
 }
 
+resource "aws_acm_certificate" "iclosed-fe-ssl-cert" {
+  domain_name       = var.fe_domain_name
+  validation_method = "DNS"
+
+  tags = {
+    Environment = var.env
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+
+#SSL records from AWS ACM
+
+resource "aws_route53_record" "iclosed-fe-ssl-records" {
+  for_each = {
+    for dvo in aws_acm_certificate.iclosed-fe-ssl-cert.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  name            = each.value.name
+  records         = [each.value.record]
+  ttl             = 60
+  type            = each.value.type
+  zone_id         = data.aws_route53_zone.iclosed.zone_id
+  depends_on = [
+    aws_acm_certificate.iclosed-fe-ssl-cert
+  ]
+}
+
+resource "aws_acm_certificate_validation" "iclosed-fe-ssl-validator" {
+  certificate_arn         = aws_acm_certificate.iclosed-fe-ssl-cert.arn
+  validation_record_fqdns = [for record in aws_route53_record.iclosed-fe-ssl-records : record.fqdn]
+}
+
 module "cdn" {
   source  = "terraform-aws-modules/cloudfront/aws"
   version = "2.9.3"
@@ -58,12 +99,12 @@ module "cdn" {
   }
 
   viewer_certificate = {
-    acm_certificate_arn = "${aws_acm_certificate_validation.iclosed-ssl-validator.certificate_arn}"
+    acm_certificate_arn = "${aws_acm_certificate_validation.iclosed-fe-ssl-validator.certificate_arn}"
     ssl_support_method  = "sni-only"
   }
   depends_on = [
     aws_s3_bucket.fe-s3,
-    aws_acm_certificate_validation.iclosed-ssl-validator
+    aws_acm_certificate_validation.iclosed-fe-ssl-validator
   ]
 }
 
