@@ -16,7 +16,7 @@ output "lb_dns_name" {
 }
 
 resource "aws_lb_target_group" "iclosed_tg" {
-  name_prefix = "iclosed_bk"
+  name_prefix = "iclosedbk"
   port        = var.iclosed_service_container_port
   target_type = "ip"
   protocol    = "HTTP"
