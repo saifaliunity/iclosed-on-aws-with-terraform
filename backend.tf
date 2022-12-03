@@ -63,9 +63,9 @@ resource "aws_ecs_task_definition" "iclosed-backend-service-task-defintion" {
   depends_on = [
     aws_cloudwatch_log_group.iclosed-backend-service_cw_log_group,
   ]
-  # lifecycle {
-  #   ignore_changes = [container_definitions]
-  # }
+  lifecycle {
+    ignore_changes = [container_definitions]
+  }
 }
 
 
