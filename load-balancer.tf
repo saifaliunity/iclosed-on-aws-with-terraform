@@ -32,6 +32,12 @@ resource "aws_lb_target_group" "iclosed_tg" {
     unhealthy_threshold = 3
     matcher             = "200"
   }
+  lifecycle {
+    create_before_destroy = true
+  }
+  depends_on = [
+    aws_lb_listener_rule.iclosed-rule
+  ]
 }
 
 resource "aws_lb_listener" "http_listner" {
