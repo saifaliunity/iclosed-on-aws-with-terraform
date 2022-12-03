@@ -1,5 +1,4 @@
 variable "iclosed_service_container_port" {
-  default = var.app_port
 }
 
 variable "iclosed_service_container_name" {
