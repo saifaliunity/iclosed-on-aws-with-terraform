@@ -97,6 +97,10 @@ variable "ec_redis_port" {
 ## Elastic Container Service Variables #######
 ############################
 
+variable "app_port" {
+
+}
+
 variable "task_cpu" {
   description = "(Required) Task CPU to the iclosed task"
 }

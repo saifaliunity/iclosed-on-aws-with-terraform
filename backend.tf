@@ -1,5 +1,5 @@
 variable "iclosed_service_container_port" {
-  default = 8080
+  default = var.app_port
 }
 
 variable "iclosed_service_container_name" {
