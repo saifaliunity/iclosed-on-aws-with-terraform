@@ -87,7 +87,7 @@ resource "aws_lb_listener_rule" "iclosed-rule" {
 
   condition {
     host_header {
-      values = ["${var.bk_domain_name}/*"]
+      values = ["${var.bk_domain_name}"]
     }
   }
 }
