@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "iclosed-backend-service-task-defintion" {
           "retries": 3,
           "command": [
               "CMD-SHELL",
-              "curl -f http://localhost:${var.iclosed_service_container_port}/${var.healthcheck_path} || exit 1"
+              "curl -f http://localhost:${var.iclosed_service_container_port}${var.healthcheck_path} || exit 1"
           ],
           "timeout": 10,
           "interval": 30,
