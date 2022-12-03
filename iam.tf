@@ -51,20 +51,10 @@ data "aws_iam_policy_document" "s3_data_bucket_policy" {
     sid    = ""
     effect = "Allow"
     actions = [
-      "s3:GetBucketLocation"
-    ]
-    resources = [
-      "${aws_s3_bucket.fe-s3.arn}"
-    ]
-  }
-  statement {
-    sid    = ""
-    effect = "Allow"
-    actions = [
       "s3:GetObject"
     ]
     resources = [
-      "${aws_s3_bucket.env-s3.arn}/backend/*",
+      "${aws_s3_bucket.env-s3.arn}/backend/.env",
     ]
   }
 }
