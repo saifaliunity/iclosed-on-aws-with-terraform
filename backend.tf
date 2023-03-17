@@ -28,7 +28,7 @@ resource "aws_ecs_task_definition" "iclosed-backend-service-task-defintion" {
       },
       "environmentFiles": [
       {
-          "value": "${data.aws_s3_bucket.selected.arn}/${var.env}/backend/.env",
+          "value": "${data.aws_s3_bucket.selected.arn}/backend/${var.env}/.env",
           "type": "s3"
       }
       ],

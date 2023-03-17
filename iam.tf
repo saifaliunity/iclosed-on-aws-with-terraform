@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "s3_data_bucket_policy" {
       "s3:GetObject"
     ]
     resources = [
-      "${data.aws_s3_bucket.selected.arn}/${var.env}/backend/*",
+      "${data.aws_s3_bucket.selected.arn}/backend/${var.env}/*",
     ]
   }
 }
