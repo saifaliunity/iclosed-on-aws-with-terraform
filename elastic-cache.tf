@@ -1,5 +1,5 @@
 resource "aws_elasticache_subnet_group" "redis-sng" {
-  name       = "redis-sng"
+  name       = "redis-sng-${var.env}"
   subnet_ids = aws_subnet.private_subnets.*.id
 }
 
@@ -23,16 +23,16 @@ resource "aws_security_group" "iclosed-backend-redis_security_group" {
 }
 
 resource "aws_cloudwatch_log_group" "iclosed-backend-redis_cw_log_group" {
-  name = "iclosed-backend-redis-engine-logs"
+  name = "iclosed-backend-redis-engine-logs-${var.env}"
   tags = {
     Environment = "${var.env}"
-    Application = "iclosed-backend-redis"
+    Application = "iclosed-backend-redis-${var.env}"
   }
 }
 
 resource "aws_elasticache_replication_group" "redis_cluster_rg" {
-  replication_group_id       = "iclosed-cluster-rg"
-  description                = "iclosed-redis-cluster"
+  replication_group_id       = "iclosed-cluster-rg-${var.env}"
+  description                = "iclosed-redis-cluster-${var.env}"
   node_type                  = var.ec_node_type
   port                       = var.ec_redis_port
   multi_az_enabled           = true

@@ -2,19 +2,19 @@ variable "iclosed_service_container_port" {
 }
 
 variable "iclosed_service_container_name" {
-  default = "iclosed-backend-service"
+  default = "iclosed-backend-service-${var.env}"
 }
 
 resource "aws_ecr_repository" "iclosed_service_ecr_repo" {
-  name = "iclosed-backend-service"
+  name = "iclosed-backend-service-${var.env}"
 }
 
 resource "aws_ecs_task_definition" "iclosed-backend-service-task-defintion" {
-  family                = "iclosed-backend-service" # Naming our first task
+  family                = "iclosed-backend-service-${var.env}" # Naming our first task
   container_definitions = <<DEFINITION
   [
     {
-      "name": "${var.iclosed_service_container_name}",
+      "name": "${var.iclosed_service_container_name}-${var.env}",
       "image": "${aws_ecr_repository.iclosed_service_ecr_repo.repository_url}",
       "essential": true,
       "logConfiguration": {
@@ -28,7 +28,7 @@ resource "aws_ecs_task_definition" "iclosed-backend-service-task-defintion" {
       },
       "environmentFiles": [
       {
-          "value": "${aws_s3_bucket.env-s3.arn}/backend/.env",
+          "value": "${aws_s3_bucket.env-s3.arn}/${var.env}/backend/.env",
           "type": "s3"
       }
       ],
@@ -70,7 +70,7 @@ resource "aws_ecs_task_definition" "iclosed-backend-service-task-defintion" {
 
 
 resource "aws_cloudwatch_log_group" "iclosed-backend-service_cw_log_group" {
-  name = "/ecs/iclosed-cluster/iclosed-backend-service"
+  name = "/ecs/iclosed-${var.env}-cluster/iclosed-backend-service-${var.env}"
   tags = {
     Environment = var.env
     Application = var.application_tag
@@ -112,7 +112,7 @@ resource "aws_security_group" "iclosed-backend-service_security_group" {
 
 
 resource "aws_ecs_service" "iclosed-backend-service" {
-  name            = "iclosed-backend-service"                                          # Naming our first service
+  name            = "iclosed-backend-service-${var.env}"                                          # Naming our first service
   cluster         = aws_ecs_cluster.iclosed-cluster.id                                 # Referencing our created Cluster
   task_definition = aws_ecs_task_definition.iclosed-backend-service-task-defintion.arn # Referencing the task our service will spin up
   #Place atleast 1 task as OD and for each 1:4 place rest autoscaling for each 1 OD to 4 SPOT

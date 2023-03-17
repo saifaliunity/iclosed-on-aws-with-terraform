@@ -1,5 +1,5 @@
 resource "aws_lb" "iclosed_lb" {
-  name                       = "iclosed-lb"
+  name                       = "iclosed-lb-${var.env}"
   internal                   = false
   load_balancer_type         = "application"
   security_groups            = [aws_security_group.lb_sg.id]
@@ -16,7 +16,7 @@ output "lb_dns_name" {
 }
 
 resource "aws_lb_target_group" "iclosed_tg" {
-  name_prefix = "bktg"
+  name_prefix = "bktg-${var.env}"
   port        = var.iclosed_service_container_port
   target_type = "ip"
   protocol    = "HTTP"

@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "s3_data_bucket_policy" {
       "s3:GetObject"
     ]
     resources = [
-      "${aws_s3_bucket.env-s3.arn}/backend/*",
+      "${aws_s3_bucket.env-s3.arn}/${var.env}/backend/*",
     ]
   }
 }
@@ -72,7 +72,7 @@ data "aws_iam_policy_document" "s3_data_bucket_policy" {
 # AWS IAM policy
 
 resource "aws_iam_policy" "s3_policy" {
-  name_prefix = "ecs-s3-policy"
+  name_prefix = "ecs-s3-policy-${var.env}"
   policy      = data.aws_iam_policy_document.s3_data_bucket_policy.json
 }
 

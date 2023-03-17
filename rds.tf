@@ -1,5 +1,5 @@
 resource "aws_db_subnet_group" "iclosed_db_subnets" {
-  name       = "iclosed_db_subnets"
+  name       = "iclosed_db_subnets-${var.env}"
   subnet_ids = aws_subnet.private_subnets[*].id
 
   tags = {
@@ -8,7 +8,7 @@ resource "aws_db_subnet_group" "iclosed_db_subnets" {
 }
 
 resource "aws_rds_cluster" "iclosed_db_cluster" {
-  cluster_identifier = "iclosed-aurora-cluster"
+  cluster_identifier = "iclosed-aurora-cluster-${var.env}"
   engine             = var.db_engine
   engine_version     = var.db_engine_version
   engine_mode        = var.db_engine_mode
@@ -31,7 +31,7 @@ resource "aws_rds_cluster" "iclosed_db_cluster" {
 
 resource "aws_rds_cluster_instance" "iclosed_cluster_instances" {
   count                = 2
-  identifier           = "iclosed-db-instance-${count.index}"
+  identifier           = "iclosed-db-instance-${count.index}-${var.env}"
   cluster_identifier   = aws_rds_cluster.iclosed_db_cluster.id
   instance_class       = var.db_instance_type
   engine               = aws_rds_cluster.iclosed_db_cluster.engine

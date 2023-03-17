@@ -4,7 +4,7 @@ resource "aws_vpc" "iclosed_vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags = {
-    Name = "iclosed-vpc"
+    Name = "iclosed-vpc-${var.env}"
     env  = var.env
   }
 }
@@ -13,7 +13,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.iclosed_vpc.id
 
   tags = {
-    Name = "iclosed-i-gw"
+    Name = "iclosed-i-gw-${var.env}"
     env  = var.env
   }
 }

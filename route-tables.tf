@@ -29,7 +29,7 @@ resource "aws_route_table" "private_rt" {
   }
 
   tags = {
-    Name = "private-rt-${count.index}"
+    Name = "private-rt-${count.index}-${var.env}"
     env  = var.env
   }
 }

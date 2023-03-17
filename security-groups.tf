@@ -1,5 +1,5 @@
 resource "aws_security_group" "lb_sg" {
-  name        = "lb_sg"
+  name        = "lb_sg-${var.env}"
   description = "Load Balancer sg"
   vpc_id      = aws_vpc.iclosed_vpc.id
 
@@ -26,7 +26,7 @@ resource "aws_security_group" "lb_sg" {
 }
 
 resource "aws_security_group" "aurora_sg" {
-  name        = "rds_aurora_sg"
+  name        = "rds_aurora_sg-${var.env}"
   description = "Open MySQL port 3306 for EC2 instances"
   vpc_id      = aws_vpc.iclosed_vpc.id
 
@@ -46,7 +46,7 @@ resource "aws_security_group" "aurora_sg" {
 }
 
 resource "aws_security_group" "redis_sg" {
-  name        = "redis_sg"
+  name        = "redis_sg-${var.env}"
   description = "Opening redis port for iclosed autoscaling group security group"
   vpc_id      = aws_vpc.iclosed_vpc.id
 

@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "iclosed-cluster" {
-  name = "iclosed-cluster" # Naming the cluster
+  name = "iclosed-cluster-${var.env}" # Naming the cluster
   setting {
     name  = "containerInsights"
     value = "enabled"
