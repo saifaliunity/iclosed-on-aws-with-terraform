@@ -9,6 +9,11 @@ resource "aws_ecr_repository" "iclosed_service_ecr_repo" {
   name = "iclosed-backend-service-${var.env}"
 }
 
+data "aws_s3_bucket" "selected" {
+  bucket = "iclosed-envs"
+}
+
+
 resource "aws_ecs_task_definition" "iclosed-backend-service-task-defintion" {
   family                = "iclosed-backend-service-${var.env}" # Naming our first task
   container_definitions = <<DEFINITION
@@ -28,7 +33,7 @@ resource "aws_ecs_task_definition" "iclosed-backend-service-task-defintion" {
       },
       "environmentFiles": [
       {
-          "value": "${aws_s3_bucket.env-s3.arn}/${var.env}/backend/.env",
+          "value": "${data.aws_s3_bucket.selected.arn}/${var.env}/backend/.env",
           "type": "s3"
       }
       ],
