@@ -1,3 +1,7 @@
+data "aws_s3_bucket" "selected" {
+  bucket = "iclosed-envs"
+}
+
 resource "aws_vpc" "iclosed_vpc" {
   cidr_block           = "10.0.0.0/24"
   instance_tenancy     = "default"
