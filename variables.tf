@@ -22,6 +22,11 @@ variable "db_instance_type" {
   description = "The DB instance class type db.t2.micro, db.m5.larage, etc.."
 }
 
+variable "db_instance_count" {
+  type        = number
+  description = "No. of db instances to launch under the RDS cluster."
+}
+
 variable "db_engine" {
   type        = string
   description = "The type of engine to run on the DB instance aurora, mysql, postgresql, etc.."

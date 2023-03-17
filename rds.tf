@@ -30,7 +30,7 @@ resource "aws_rds_cluster" "iclosed_db_cluster" {
 }
 
 resource "aws_rds_cluster_instance" "iclosed_cluster_instances" {
-  count                = 2
+  count                = var.db_instance_count
   identifier           = "iclosed-db-instance-${count.index}-${var.env}"
   cluster_identifier   = aws_rds_cluster.iclosed_db_cluster.id
   instance_class       = var.db_instance_type
