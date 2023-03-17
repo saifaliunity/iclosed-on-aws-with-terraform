@@ -79,14 +79,14 @@ module "cdn" {
   }]
   create_origin_access_identity = true
   origin_access_identities = {
-    s3_bucket_one = "cloudfront-s3-access"
+    s3_bucket_one = "cloudfront-s3-access-${var.env}"
   }
 
   origin = {
     s3_one = {
       domain_name = "${aws_s3_bucket.fe-s3.bucket_regional_domain_name}"
       s3_origin_config = {
-        origin_access_identity = "s3_bucket_one-${var.env}"
+        origin_access_identity = "s3_bucket_one"
       }
       origin_shield = {
         enabled              = true
