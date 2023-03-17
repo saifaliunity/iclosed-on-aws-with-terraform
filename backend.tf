@@ -2,7 +2,7 @@ variable "iclosed_service_container_port" {
 }
 
 variable "iclosed_service_container_name" {
-  default = "iclosed-backend-service-${var.env}"
+  default = "iclosed-backend-service"
 }
 
 resource "aws_ecr_repository" "iclosed_service_ecr_repo" {
