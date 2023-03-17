@@ -1,11 +1,11 @@
 resource "aws_elasticache_subnet_group" "redis-sng" {
-  count      = var.create_reids ? 1 : 0
+  count      = var.create_redis ? 1 : 0
   name       = "redis-sng-${var.env}"
   subnet_ids = aws_subnet.private_subnets.*.id
 }
 
 resource "aws_security_group" "iclosed-backend-redis_security_group" {
-  count = var.create_reids ? 1 : 0
+  count = var.create_redis ? 1 : 0
 
   vpc_id = aws_vpc.iclosed_vpc.id
   ingress {
@@ -26,7 +26,7 @@ resource "aws_security_group" "iclosed-backend-redis_security_group" {
 }
 
 resource "aws_cloudwatch_log_group" "iclosed-backend-redis_cw_log_group" {
-  count = var.create_reids ? 1 : 0
+  count = var.create_redis ? 1 : 0
   name  = "iclosed-backend-redis-engine-logs-${var.env}"
   tags = {
     Environment = "${var.env}"
@@ -35,7 +35,7 @@ resource "aws_cloudwatch_log_group" "iclosed-backend-redis_cw_log_group" {
 }
 
 resource "aws_elasticache_replication_group" "redis_cluster_rg" {
-  count                      = var.create_reids ? 1 : 0
+  count                      = var.create_redis ? 1 : 0
   replication_group_id       = "iclosed-cluster-rg-${var.env}"
   description                = "iclosed-redis-cluster-${var.env}"
   node_type                  = var.ec_node_type

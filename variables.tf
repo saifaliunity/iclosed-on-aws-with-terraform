@@ -69,7 +69,7 @@ variable "db_password" {
 ## Elastic Cache Variables #######
 ############################
 
-variable "create_reids" {
+variable "create_redis" {
   type         = bool
   description = "Whether to create redis or not?"
 }
