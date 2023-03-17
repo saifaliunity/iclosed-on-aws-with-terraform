@@ -71,7 +71,7 @@ variable "db_password" {
 
 variable "create_reids" {
   type         = bool
-  descripption = "Whether to create redis or not?"
+  description = "Whether to create redis or not?"
 }
 
 variable "ec_node_type" {
