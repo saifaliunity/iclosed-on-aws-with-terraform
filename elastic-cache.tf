@@ -1,9 +1,12 @@
 resource "aws_elasticache_subnet_group" "redis-sng" {
+  count      = var.create_reids ? 1 : 0
   name       = "redis-sng-${var.env}"
   subnet_ids = aws_subnet.private_subnets.*.id
 }
 
 resource "aws_security_group" "iclosed-backend-redis_security_group" {
+  count = var.create_reids ? 1 : 0
+
   vpc_id = aws_vpc.iclosed_vpc.id
   ingress {
     from_port = 6379
@@ -23,7 +26,8 @@ resource "aws_security_group" "iclosed-backend-redis_security_group" {
 }
 
 resource "aws_cloudwatch_log_group" "iclosed-backend-redis_cw_log_group" {
-  name = "iclosed-backend-redis-engine-logs-${var.env}"
+  count = var.create_reids ? 1 : 0
+  name  = "iclosed-backend-redis-engine-logs-${var.env}"
   tags = {
     Environment = "${var.env}"
     Application = "iclosed-backend-redis-${var.env}"
@@ -31,6 +35,7 @@ resource "aws_cloudwatch_log_group" "iclosed-backend-redis_cw_log_group" {
 }
 
 resource "aws_elasticache_replication_group" "redis_cluster_rg" {
+  count                      = var.create_reids ? 1 : 0
   replication_group_id       = "iclosed-cluster-rg-${var.env}"
   description                = "iclosed-redis-cluster-${var.env}"
   node_type                  = var.ec_node_type
@@ -51,5 +56,5 @@ resource "aws_elasticache_replication_group" "redis_cluster_rg" {
 }
 
 output "redis_endpoint" {
-  value = aws_elasticache_replication_group.redis_cluster_rg.primary_endpoint_address
+  value = length(aws_elasticache_replication_group.redis_cluster_rg) > 0 ? aws_elasticache_replication_group.redis_cluster_rg.primary_endpoint_address : null
 }

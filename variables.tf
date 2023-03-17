@@ -68,6 +68,12 @@ variable "db_password" {
 ############################
 ## Elastic Cache Variables #######
 ############################
+
+variable "create_reids" {
+  type         = bool
+  descripption = "Whether to create redis or not?"
+}
+
 variable "ec_node_type" {
   type        = string
   description = "The instance type for each node in the cluster"

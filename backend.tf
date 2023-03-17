@@ -112,7 +112,7 @@ resource "aws_security_group" "iclosed-backend-service_security_group" {
 
 
 resource "aws_ecs_service" "iclosed-backend-service" {
-  name            = "iclosed-backend-service-${var.env}"                                          # Naming our first service
+  name            = "iclosed-backend-service-${var.env}"                               # Naming our first service
   cluster         = aws_ecs_cluster.iclosed-cluster.id                                 # Referencing our created Cluster
   task_definition = aws_ecs_task_definition.iclosed-backend-service-task-defintion.arn # Referencing the task our service will spin up
   #Place atleast 1 task as OD and for each 1:4 place rest autoscaling for each 1 OD to 4 SPOT
