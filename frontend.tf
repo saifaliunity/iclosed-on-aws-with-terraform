@@ -103,7 +103,7 @@ module "cdn" {
     cached_methods             = ["GET", "HEAD"]
     origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.origin_request_policy.id
     cache_policy_id            = data.aws_cloudfront_cache_policy.cache_policy.id
-    response_headers_policy_id = "eaab4381-ed33-4a86-88ca-d9558dc6cd63"
+    response_headers_policy_id = "5cc3b908-e619-4b99-88e5-2cf7f45965bd"
     compress                   = true
     query_string               = false
     use_forwarded_values       = false
