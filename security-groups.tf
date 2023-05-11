@@ -43,7 +43,7 @@ resource "aws_security_group" "aurora_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-ignore_changess = [ingress]
+ignore_changes = [ingress]
 }
 
 
@@ -65,5 +65,5 @@ resource "aws_security_group" "redis_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-ignore_changess = [ingress]
+ignore_changes = [ingress]
 }
